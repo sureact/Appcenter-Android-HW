@@ -1,0 +1,2 @@
+include ':gitHub_API'
+rootProject.name = "githubAPI"
