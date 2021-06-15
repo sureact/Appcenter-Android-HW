@@ -1,4 +1,4 @@
-package kr.co.hanbit.networkretrofit
+package org.sumin.githubapi
 
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule

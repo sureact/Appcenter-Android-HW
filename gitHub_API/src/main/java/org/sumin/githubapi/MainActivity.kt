@@ -3,6 +3,7 @@ package org.sumin.githubapi
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import kr.co.hanbit.networkretrofit.CustomAdapter
 import org.sumin.githubapi.databinding.ActivityMainBinding
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,14 +14,15 @@ class MainActivity : AppCompatActivity() {
     val binding by lazy{ActivityMainBinding.inflate(layoutInflater)}    //바인딩 생성후 저장
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val adapter = CustomAdapter()
+        super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.recyclerView.adapter =adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        val adapter = CustomAdapter()   //커스텀 아답터 생성
+        binding.recyclerView.adapter =adapter       //리사이클러뷰에 연결
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)  //리니어 레이아웃 메니저 연결결
 
-        val retrofit = Retrofit.Builder().baseUrl("http://api.github.com").
-        addConverterFactory(GsonConverterFactory.create()).build()
+       val retrofit = Retrofit.Builder().baseUrl("http://api.github.com")
+               .addConverterFactory(GsonConverterFactory.create()).build()
 
         binding.buttonRequest.setOnClickListener {
             val githubService = retrofit.create(GithubService::class.java)
