@@ -1,2 +1,2 @@
-include ':gitHub_API'
+include ':githubapi'
 rootProject.name = "githubAPI"
