@@ -22,27 +22,30 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = CustomAdapter()   //커스텀 아답터 생성
         binding.recyclerView.adapter =adapter       //리사이클러뷰에 연결
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)  //리니어 레이아웃 메니저 연결결
+        binding.recyclerView.layoutManager = LinearLayoutManager(baseContext)  //리니어 레이아웃 메니저 연결결
 
-        val retrofit = Retrofit.Builder().baseUrl("http://api.github.com/")
+        val retrofit = Retrofit.Builder().baseUrl("https://api.github.com")
             .addConverterFactory(GsonConverterFactory.create()).build()
 
         Log.d("retrofit","레트로핏 연결")
 
+        val githubService = retrofit.create(GithubService::class.java)
+
         //버튼이 클릭될 때
         binding.buttonRequest.setOnClickListener {
-            val githubService = retrofit.create(GithubService::class.java)
             githubService.users().enqueue(object : Callback<Repository> {
                 override fun onFailure(call: Call<Repository>, t: Throwable) {
                     Log.d("response","응답안됨")
                 }
                 override fun onResponse(call: Call<Repository>, response: Response<Repository>) {
-                    Log.d("response","응답됨")
-                    adapter.userList = response.body() as Repository
-                    adapter.notifyDataSetChanged()
+                    response.body()?.let{result ->
+                        adapter.userList=result
+                        adapter.notifyDataSetChanged()
+                    }
                 }
             })
         }
+
     }
 }
 interface  GithubService{
