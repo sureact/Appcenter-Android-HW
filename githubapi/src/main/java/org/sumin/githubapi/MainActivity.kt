@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
                     Log.d("response","응답안됨")
                 }
                 override fun onResponse(call: Call<Repository>, response: Response<Repository>) {
+                    Log.d("response","응답됨")
                     response.body()?.let{result ->
                         adapter.userList=result
                         adapter.notifyDataSetChanged()
