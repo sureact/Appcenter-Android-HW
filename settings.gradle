@@ -1,2 +1,3 @@
+include ':phonebook'
 include ':githubapi'
 rootProject.name = "githubAPI"
